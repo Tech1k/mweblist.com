@@ -160,7 +160,7 @@ $syncHeightValue = $syncHeight['last_scanned_block'] ?? 'N/A';
             <p style="text-align: center; font-size: 0.9em; color: gray;">
                 Disclaimer: This site is provided "as is" with no warranties. Use at your own risk. Always do your own research and verification.
             </p>
-            <p style="text-align: center;">Made with ♥️ and ☕ by <a href="https://tech1k.com" target="_blank" rel="noopener">Tech1k</a>. This site is <a href="https://github.com/Tech1k/mweblist" target="_blank" rel="noopener">open-source</a>.</p>
+            <p style="text-align: center;">Made with ♥️ and ☕ by <a href="https://tech1k.com" target="_blank" rel="noopener">Tech1k</a>. This site is <a href="https://github.com/Tech1k/mweblist.com" target="_blank" rel="noopener">open-source</a>.</p>
         </footer>
         <script>
             const standardizedTableRows = document.querySelectorAll("#standardizedTable tbody tr");
