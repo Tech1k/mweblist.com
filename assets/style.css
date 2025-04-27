@@ -1,0 +1,66 @@
+@font-face {
+  font-family: 'Inter';
+  src: url('/assets/fonts/inter.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+table {
+    border-collapse: collapse;
+    width: 50%; margin: 20px auto;
+    background: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    text-align: center;
+}
+th {
+    background: #eee;
+}
+
+.section-title {
+    text-align: center; color: #555; margin-top: 40px;
+}
+
+input[type="number"], input[type="text"] {
+    width: 100px; padding: 5px; margin: 5px;
+}
+
+.filters {
+    text-align: center; margin: 20px;
+}
+
+.toggle-button {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.toggle-button:hover {
+    background-color: #e0e0e0;
+}
+
+body {
+	font-family: 'Inter', sans-serif !important;
+    background: #f7f7f7;
+    padding: 20px;
+}
+
+#main {
+	margin: auto;
+	width: 70%;
+}
+
+@media (max-width: 992px) {
+	#main {
+		width: 95%;
+	}
+	#navlink {
+		margin-right: auto;
+	}
+}
