@@ -37,7 +37,7 @@ $syncHeightValue = $syncHeight['last_scanned_block'] ?? 'N/A';
         <meta name="robots" content="index, follow">
         <meta name="description" content="A list of MWEB peg-ins to preserve your privacy by obfuscation."/>
         <meta name="author" content="Tech1k">
-        <title>MWEB List - Standard Peg-In Amounts for Privacy</title>
+        <title>MWEB List - Common Peg-In Amounts for Privacy</title>
         <link rel="shortcut icon" href="/assets/favicon.png"/>
         <meta property="og:title" content="LibreNode - Home"/>
         <meta property="og:description" content="A list of MWEB peg-ins to preserve your privacy by obfuscation."/>
@@ -63,7 +63,7 @@ $syncHeightValue = $syncHeight['last_scanned_block'] ?? 'N/A';
             <!--<label for="search">Search LTC:</label>
             <input type="text" id="search" placeholder="Search...">-->
         </div>
-        <h2 class="section-title">Standardized (Rounded) Peg-In Amounts</h2>
+        <h2 class="section-title">Common (Rounded) Peg-In Amounts</h2>
         <table id="standardizedTable">
             <thead>
                 <tr>
@@ -134,7 +134,7 @@ $syncHeightValue = $syncHeight['last_scanned_block'] ?? 'N/A';
                 <h3>What is MWEB?</h3>
                 <p>MWEB (MimbleWimble Extension Block) is an optional privacy and scalability upgrade for Litecoin. It allows users to send and receive confidential transactions by moving coins into a separate sidechain within the Litecoin blockchain where amounts and addresses are hidden from public view.</p>
                 <p>To learn more about MWEB, check out the <a href="https://litecoin.com/learning-center/litecoin-and-mweb-what-it-is-and-how-to-use-it" target="_blank" rel="noopener noreferrer">official MWEB overview</a>.</p>
-                <h3>How does using a standardized amount increase privacy?</h3>
+                <h3>How does using a common amount increase privacy?</h3>
                 <p>Using common peg-in amounts makes it harder for outside observers to link specific peg-ins to individual users. If everyone uses similar amounts when moving funds into MWEB, it becomes more difficult to distinguish between different transactions, improving the overall privacy of the network.</p>
                 <h3>I thought MWEB was private — how can you see these peg-in amounts?</h3>
                 <p>While transactions inside MWEB are private, the act of pegging coins into MWEB happens on the regular Litecoin blockchain and is visible. The peg-in transaction itself shows the amount being transferred into MWEB, even though the subsequent private transactions are not visible. This site only tracks those public peg-in events, not what happens once the coins are inside MWEB.</p>
