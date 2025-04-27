@@ -35,12 +35,12 @@ $syncHeightValue = $syncHeight['last_scanned_block'] ?? 'N/A';
         <meta name="theme-color" content="#5271ff">
         <link rel="canonical" href="https://mweblist.com"/>
         <meta name="robots" content="index, follow">
-        <meta name="description" content="A list of MWEB peg-ins to preserve your privacy by obfuscation."/>
+        <meta name="description" content="A list of MWEB peg-ins to help with obfuscation."/>
         <meta name="author" content="Tech1k">
-        <title>MWEB List - Common Peg-In Amounts for Privacy</title>
+        <title>MWEB List - Common Peg-In Amounts for Obfuscation</title>
         <link rel="shortcut icon" href="/assets/favicon.png"/>
         <meta property="og:title" content="LibreNode - Home"/>
-        <meta property="og:description" content="A list of MWEB peg-ins to preserve your privacy by obfuscation."/>
+        <meta property="og:description" content="A list of MWEB peg-ins to help with obfuscation."/>
         <meta property="og:type" content="website"/>
         <meta property="og:url" content="https://mweblist.com"/>
         <meta property="og:site_name" content="MWEB List"/>
@@ -49,7 +49,7 @@ $syncHeightValue = $syncHeight['last_scanned_block'] ?? 'N/A';
     <body>
         <div id="main" style="text-align: center;">
             <h1>MWEB Peg-In List</h1>
-            <h3>A list of MWEB peg-ins ordered by occurrence since activation. By using common peg-in amounts, you can blend in with other users and increase your privacy when entering MWEB. <a href="#faq">Learn more in the FAQs</a>.</h3>
+            <h3>A list of MWEB peg-ins ordered by occurrence since activation. By using common peg-in amounts, you can blend in with other users and increase your obfuscation when entering MWEB. <a href="#faq">Learn more in the FAQs</a>.</h3>
             <h3>Total LTC in MWEB as of block <?php echo number_format(htmlspecialchars($syncHeightValue)); ?>: <?php echo htmlspecialchars($mwebTotalValue); ?> LTC</h3>
             <h3><i>Note: The database is still syncing and updates periodically. Amounts displayed will be incorrect until completely synced.</i></h3>
         </div>
@@ -106,7 +106,7 @@ $syncHeightValue = $syncHeight['last_scanned_block'] ?? 'N/A';
             </table>
         </div>
         <h2 class="section-title">
-            <button id="toggleRandomTable" class="toggle-button">➕ Show Unorganized (non-rounded) Peg-Ins</button>
+            <button id="toggleRandomTable" class="toggle-button">➕ Show Unique (non-rounded) Peg-Ins</button>
         </h2>
         <div id="randomTableContainer" style="display: none;">
             <table id="randomTable">
@@ -134,8 +134,10 @@ $syncHeightValue = $syncHeight['last_scanned_block'] ?? 'N/A';
                 <h3>What is MWEB?</h3>
                 <p>MWEB (MimbleWimble Extension Block) is an optional privacy and scalability upgrade for Litecoin. It allows users to send and receive confidential transactions by moving coins into a separate sidechain within the Litecoin blockchain where amounts and addresses are hidden from public view.</p>
                 <p>To learn more about MWEB, check out the <a href="https://litecoin.com/learning-center/litecoin-and-mweb-what-it-is-and-how-to-use-it" target="_blank" rel="noopener noreferrer">official MWEB overview</a>.</p>
-                <h3>How does using a common amount increase privacy?</h3>
-                <p>Using common peg-in amounts makes it harder for outside observers to link specific peg-ins to individual users. If everyone uses similar amounts when moving funds into MWEB, it becomes more difficult to distinguish between different transactions, improving the overall privacy of the network.</p>
+                <h3>How does using a common amount increase obfuscation?</h3>
+                <p>Using common peg-in amounts makes it harder for outside observers to link specific peg-ins to individual users. If everyone uses similar amounts when moving funds into MWEB, it becomes more difficult to distinguish between different transactions, improving the overall obfuscation of the network.</p>
+                <h3>You mention obfuscation a lot, what about increasing privacy?</h3>
+                <p>While obfuscation is a part of privacy, it's not everything. To increase your privacy before pegging-in, you should use a new address and receive coins not linked to you on the public chain. When you want to move back to the main chain, you should move your coins in MWEB at least once to "mix" your coins before pegging-out to increase your privacy and if possible, not peg-out to the same address your used to peg-in with.</p>
                 <h3>I thought MWEB was private — how can you see these peg-in amounts?</h3>
                 <p>While transactions inside MWEB are private, the act of pegging coins into MWEB happens on the regular Litecoin blockchain and is visible. The peg-in transaction itself shows the amount being transferred into MWEB, even though the subsequent private transactions are not visible. This site only tracks those public peg-in events, not what happens once the coins are inside MWEB.</p>
                 <h3>Can I peg-out back to regular Litecoin?</h3>
@@ -223,10 +225,10 @@ $syncHeightValue = $syncHeight['last_scanned_block'] ?? 'N/A';
             toggleButton.addEventListener("click", () => {
                 if (randomTableContainer.style.display === "none") {
                     randomTableContainer.style.display = "block";
-                    toggleButton.textContent = "➖ Hide Unorganized (non-rounded) Peg-Ins";
+                    toggleButton.textContent = "➖ Hide Unique (non-rounded) Peg-Ins";
                 } else {
                     randomTableContainer.style.display = "none";
-                    toggleButton.textContent = "➕ Show Unorganized (non-rounded) Peg-Ins";
+                    toggleButton.textContent = "➕ Show Unique (non-rounded) Peg-Ins";
                 }
             });
 
