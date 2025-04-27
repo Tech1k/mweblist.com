@@ -134,7 +134,7 @@ $syncHeightValue = $syncHeight['last_scanned_block'] ?? 'N/A';
                 <h3>What is MWEB?</h3>
                 <p>MWEB (MimbleWimble Extension Block) is an optional privacy and scalability upgrade for Litecoin. It allows users to send and receive confidential transactions by moving coins into a separate sidechain within the Litecoin blockchain where amounts and addresses are hidden from public view.</p>
                 <p>To learn more about MWEB, check out the <a href="https://litecoin.com/learning-center/litecoin-and-mweb-what-it-is-and-how-to-use-it" target="_blank" rel="noopener noreferrer">official MWEB overview</a>.</p>
-                <h3>How does using a common amount increase obfuscation?</h3>
+                <h3>How do common peg-in amounts help with privacy?</h3>
                 <p>Using common peg-in amounts makes it harder for outside observers to link specific peg-ins to individual users. If everyone uses similar amounts when moving funds into MWEB, it becomes more difficult to distinguish between different transactions, improving the overall obfuscation of the network.</p>
                 <h3>You mention obfuscation a lot, what about increasing privacy?</h3>
                 <p>While obfuscation is a part of privacy, it's not everything. To increase your privacy before pegging-in, you should use a new address and receive coins not linked to you on the public chain. When you want to move back to the main chain, you should move your coins in MWEB at least once to "mix" your coins before pegging-out to increase your privacy and if possible, not peg-out to the same address your used to peg-in with.</p>
