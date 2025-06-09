@@ -17,6 +17,10 @@ $stmt = $db->query("
 ");
 $randomPegins = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+$stmt = $db->query("SELECT COUNT(*) AS count FROM mweb_pegins");
+$peginCount = $stmt->fetch(PDO::FETCH_ASSOC);
+$peginCount = $peginCount['count'];
+
 $stmt = $db->query("SELECT mweb_total FROM mweb_total");
 $mwebTotal = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -44,14 +48,15 @@ $syncHeightValue = $syncHeight['last_scanned_block'] ?? 'N/A';
         <meta property="og:type" content="website"/>
         <meta property="og:url" content="https://mweblist.com"/>
         <meta property="og:site_name" content="MWEB List"/>
-        <link rel="stylesheet" href="/assets/style.css">
+        <link rel="stylesheet" href="/assets/style.css?v=2">
     </head>
     <body>
         <div id="main" style="text-align: center;">
-            <h1>MWEB Peg-In List</h1>
+            <h1><img src="/assets/mweblist.png" width="48px" style="margin-right: 5px; vertical-align: middle;">MWEB Peg-In List</h1>
             <h3>A list of MWEB peg-ins ordered by occurrence since activation. By using common peg-in amounts, you can blend in with other users and increase your obfuscation when entering MWEB. <a href="#faq">Learn more in the FAQs</a>.</h3>
-            <h3>Total LTC in MWEB as of block <?php echo number_format(htmlspecialchars($syncHeightValue)); ?>: <?php echo htmlspecialchars($mwebTotalValue); ?> LTC</h3>
-            <h3><i>Note: The database is still syncing and updates periodically. Amounts displayed will be incorrect until completely synced.</i></h3>
+            <h3>MWEB total at block <?php echo number_format(htmlspecialchars($syncHeightValue)); ?>: <?php echo htmlspecialchars($mwebTotalValue); ?> LTC</h3>
+            <h3>Tracked peg-ins: <?php echo number_format(htmlspecialchars($peginCount)); ?></h3>
+            <h3><i>Note: The database updates periodically &ndash; background sync is in the works.</i></h3>
         </div>
         <div class="filters">
             <label for="minAmount">Min LTC:</label>
@@ -73,7 +78,7 @@ $syncHeightValue = $syncHeight['last_scanned_block'] ?? 'N/A';
             </thead>
             <tbody id="standardizedMainBody">
                 <?php foreach ($standardizedPegins as $row): ?>
-                    <?php if ($row['count'] > 5 && $row['amount'] != 0.0): ?>
+                    <?php if ($row['count'] > 250 && $row['amount'] != 0.0): ?>
                         <tr>
                             <td class="amount"><?php echo htmlspecialchars(number_format($row['amount'], 1)); ?></td>
                             <td class="count"><?php echo htmlspecialchars($row['count']); ?></td>
@@ -83,7 +88,7 @@ $syncHeightValue = $syncHeight['last_scanned_block'] ?? 'N/A';
             </tbody>
         </table>
         <h3 class="section-title">
-            <button id="toggleRareStandardized" class="toggle-button">➕ Show Low Occurrence (≤5 count) Peg-Ins</button>
+            <button id="toggleRareStandardized" class="toggle-button">➕ Show Low Occurrence (≤250 count) Peg-Ins</button>
         </h3>
         <div id="rareStandardizedContainer" style="display: none;">
             <table id="rareStandardizedTable">
@@ -95,7 +100,7 @@ $syncHeightValue = $syncHeight['last_scanned_block'] ?? 'N/A';
                 </thead>
                 <tbody>
                     <?php foreach ($standardizedPegins as $row): ?>
-                        <?php if ($row['count'] < 6): ?>
+                        <?php if ($row['count'] < 251): ?>
                             <tr>
                                 <td class="amount"><?php echo htmlspecialchars(number_format($row['amount'], 1)); ?></td>
                                 <td class="count"><?php echo htmlspecialchars($row['count']); ?></td>
@@ -138,7 +143,7 @@ $syncHeightValue = $syncHeight['last_scanned_block'] ?? 'N/A';
                 <p>Using common peg-in amounts makes it harder for outside observers to link specific peg-ins to individual users. If everyone uses similar amounts when moving funds into MWEB, it becomes more difficult to distinguish between different transactions, improving the overall obfuscation of the network.</p>
                 <h3>You mention obfuscation a lot, what about increasing privacy?</h3>
                 <p>While obfuscation is a part of privacy, it's not everything. To increase your privacy before pegging-in, you should use a new address and receive coins not linked to you on the public chain. When you want to move back to the main chain, you should move your coins in MWEB at least once to "mix" your coins before pegging-out to increase your privacy and if possible, not peg-out to the same address your used to peg-in with.</p>
-                <h3>I thought MWEB was private — how can you see these peg-in amounts?</h3>
+                <h3>I thought MWEB was private &ndash; how can you see these peg-in amounts?</h3>
                 <p>While transactions inside MWEB are private, the act of pegging coins into MWEB happens on the regular Litecoin blockchain and is visible. The peg-in transaction itself shows the amount being transferred into MWEB, even though the subsequent private transactions are not visible. This site only tracks those public peg-in events, not what happens once the coins are inside MWEB.</p>
                 <h3>Can I peg-out back to regular Litecoin?</h3>
                 <p>Yes! You can peg-out from MWEB back to the regular Litecoin main chain at any time. When you peg-out, the transaction amount and recipient address are again visible on the public blockchain, but your activity while inside MWEB remains private.</p>
@@ -153,7 +158,7 @@ $syncHeightValue = $syncHeight['last_scanned_block'] ?? 'N/A';
                     <strong>MWEB Address:</strong><br/>
                     ltcmweb1qqwc4tkjwck8ecqgs6d63p3j8sx23qmpke56yy5596tw3h924uvsewq7tv3h2dhlfeunqxcl75rpdqtr4h0tth3kncc2ttwysuz83g889ccl8ryxs
                 </p>
-                <p><strong>OpenAlias: </strong>tech1k.com</p>
+                <p><strong>OpenAlias: </strong>mweblist.com</p>
             </div>
         </section>
         <br/>
@@ -238,10 +243,10 @@ $syncHeightValue = $syncHeight['last_scanned_block'] ?? 'N/A';
             toggleRareButton.addEventListener("click", () => {
                 if (rareStandardizedContainer.style.display === "none") {
                     rareStandardizedContainer.style.display = "block";
-                    toggleRareButton.textContent = "➖ Hide Low Occurrence (≤5 count) Peg-Ins";
+                    toggleRareButton.textContent = "➖ Hide Low Occurrence (≤250 count) Peg-Ins";
                 } else {
                     rareStandardizedContainer.style.display = "none";
-                    toggleRareButton.textContent = "➕ Show Low Occurrence (≤5 count) Peg-Ins";
+                    toggleRareButton.textContent = "➕ Show Low Occurrence (≤250 count) Peg-Ins";
                 }
             });
         </script>

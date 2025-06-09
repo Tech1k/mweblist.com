@@ -20,6 +20,10 @@ th {
     background: #eee;
 }
 
+tr:nth-child(even) {
+    background-color: #f8f8f8;
+}
+
 .section-title {
     text-align: center; color: #555; margin-top: 40px;
 }

@@ -6,9 +6,12 @@ import time
 RPC_URL = 'http://NODEIP:9332/'
 RPC_USER = 'RPC_USER'
 RPC_PASSWORD = 'RPC_PASS'
+COMMIT_EVERY_N_BLOCKS = 100
 
 conn = sqlite3.connect('mweblist.db')
 cursor = conn.cursor()
+conn.execute("PRAGMA journal_mode = WAL;")
+conn.execute("PRAGMA synchronous = OFF;")
 
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS mweb_pegins (
@@ -57,32 +60,27 @@ def set_last_scanned_block(height):
         INSERT INTO scan_progress (id, last_scanned_block) VALUES (1, ?)
         ON CONFLICT(id) DO UPDATE SET last_scanned_block=excluded.last_scanned_block
     ''', (height,))
-    conn.commit()
-
-def get_mweb_total():
-    cursor.execute("SELECT mweb_total FROM mweb_total WHERE id = 1")
-    row = cursor.fetchone()
-    return float(row[0]) if row else 0.0
 
 def set_mweb_total(total):
     cursor.execute('''
         INSERT INTO mweb_total (id, mweb_total) VALUES (1, ?)
         ON CONFLICT(id) DO UPDATE SET mweb_total=excluded.mweb_total
     ''', (total,))
-    conn.commit()
 
 def scan_blocks():
     start = get_last_scanned_block()
     tip = rpc_request('getblockcount')
 
+    batch_pegins = []
+    mweb_total_running = 0.0
+
     for height in range(start, tip + 1):
         blockhash = rpc_request('getblockhash', [height])
         block = rpc_request('getblock', [blockhash, 2])
 
-        mweb_total = 0.0
-        peg_in_count = 0
-
         print(f"Scanning block {height}...")
+        peg_in_count = 0
+        mweb_total_block = 0.0
 
         for tx in block['tx']:
             for vout in tx.get('vout', []):
@@ -90,21 +88,27 @@ def scan_blocks():
                 value = vout.get('value', 0.0)
 
                 if type_ == 'witness_mweb_hogaddr':
-                    mweb_total += value
-
-                if type_ == 'witness_mweb_pegin':
-                    cursor.execute('''
-                        INSERT OR IGNORE INTO mweb_pegins (txid, block_height, amount)
-                        VALUES (?, ?, ?)
-                    ''', (tx['txid'], height, value))
+                    mweb_total_block += value
+                elif type_ == 'witness_mweb_pegin':
+                    batch_pegins.append((tx['txid'], height, value))
                     peg_in_count += 1
 
-        if mweb_total > 0:
-            set_mweb_total(mweb_total)
+        mweb_total_running = mweb_total_block
 
-        set_last_scanned_block(height)
+        if height % COMMIT_EVERY_N_BLOCKS == 0 or height == tip:
+            if batch_pegins:
+                cursor.executemany('''
+                    INSERT OR IGNORE INTO mweb_pegins (txid, block_height, amount)
+                    VALUES (?, ?, ?)
+                ''', batch_pegins)
+                batch_pegins.clear()
 
-        print(f"Scanned block {height} (MWEB total: {mweb_total}), Peg-ins detected: {peg_in_count}")
+            set_last_scanned_block(height)
+            set_mweb_total(mweb_total_running)
+            conn.commit()
+            print(f"Committed at block {height} (Set MWEB total: {mweb_total_running:.4f})")
+
+        print(f"Scanned block {height} | Peg-ins: {peg_in_count} | MWEB total in block: {mweb_total_block:.4f}")
 
 if __name__ == "__main__":
     try:
@@ -112,4 +116,5 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("Scanning interrupted by user.")
     finally:
+        conn.commit()
         conn.close()
