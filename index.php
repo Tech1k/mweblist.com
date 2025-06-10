@@ -132,6 +132,7 @@ $syncHeightValue = $syncHeight['last_scanned_block'] ?? 'N/A';
         </div>
         <section id="faq">
             <div id="main">
+                <hr/>
                 <h2>FAQs</h2>
                 <h3>What is this site?</h3>
                 <p>This site displays commonly used peg-in amounts for Litecoin's MimbleWimble Extension Block (MWEB). Peg-ins are public events on the Litecoin blockchain where coins are moved into the private MWEB sidechain.</p>
@@ -157,11 +158,9 @@ $syncHeightValue = $syncHeight['last_scanned_block'] ?? 'N/A';
                     <strong>MWEB Address:</strong><br/>
                     ltcmweb1qqwc4tkjwck8ecqgs6d63p3j8sx23qmpke56yy5596tw3h924uvsewq7tv3h2dhlfeunqxcl75rpdqtr4h0tth3kncc2ttwysuz83g889ccl8ryxs
                 </p>
-                <p><strong>OpenAlias: </strong>mweblist.com</p>
+                <hr/>
             </div>
         </section>
-        <br/>
-        <hr/>
         <footer>
             <p style="text-align: center; font-size: 0.9em; color: gray;">
                 Disclaimer: This site is provided "as is" with no warranties. Use at your own risk. Always do your own research and verification.
