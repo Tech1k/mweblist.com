@@ -1,0 +1,17 @@
+[Unit]
+Description=MWEBList Peg-in Sync Daemon
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /path/to/mwebscan.py
+WorkingDirectory=/path/to/dir/
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+User=your-user
+
+[Install]
+WantedBy=multi-user.target

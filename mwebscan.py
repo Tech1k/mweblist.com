@@ -68,8 +68,11 @@ def set_mweb_total(total):
     ''', (total,))
 
 def scan_blocks():
-    start = get_last_scanned_block()
+    start = get_last_scanned_block() + 1
     tip = rpc_request('getblockcount')
+
+    if tip < start:
+        return
 
     batch_pegins = []
     mweb_total_running = 0.0
@@ -110,11 +113,30 @@ def scan_blocks():
 
         print(f"Scanned block {height} | Peg-ins: {peg_in_count} | MWEB total in block: {mweb_total_block:.4f}")
 
+def poll_for_blocks(interval=180):
+    print(f"Polling for new blocks every {interval} seconds...")
+    last_seen = rpc_request('getblockcount')
+
+    while True:
+        try:
+            time.sleep(interval)
+            current = rpc_request('getblockcount')
+            if current > last_seen:
+                print(f"New block(s) detected: {current}")
+                scan_blocks()
+                last_seen = current
+            else:
+                print("No new blocks yet.")
+        except Exception as e:
+            print(f"Polling error: {e}")
+            time.sleep(5)
+
 if __name__ == "__main__":
     try:
         scan_blocks()
+        poll_for_blocks()
     except KeyboardInterrupt:
-        print("Scanning interrupted by user.")
+        print("Shutting down...")
     finally:
         conn.commit()
         conn.close()

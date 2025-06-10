@@ -56,7 +56,6 @@ $syncHeightValue = $syncHeight['last_scanned_block'] ?? 'N/A';
             <h3>A list of MWEB peg-ins ordered by occurrence since activation. By using common peg-in amounts, you can blend in with other users and increase your obfuscation when entering MWEB. <a href="#faq">Learn more in the FAQs</a>.</h3>
             <h3>MWEB total at block <?php echo number_format(htmlspecialchars($syncHeightValue)); ?>: <?php echo htmlspecialchars($mwebTotalValue); ?> LTC</h3>
             <h3>Tracked peg-ins: <?php echo number_format(htmlspecialchars($peginCount)); ?></h3>
-            <h3><i>Note: The database updates periodically &ndash; background sync is in the works.</i></h3>
         </div>
         <div class="filters">
             <label for="minAmount">Min LTC:</label>
